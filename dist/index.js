@@ -21954,17 +21954,17 @@
 	  value: true
 	});
 	exports.default = reducer;
-	var CIRCLE_PURSUIT_RATE = 0.50; // 収束率
+	var START_PURSUIT_RATE = 0.50; // 収束率
 
-	var circlePositions = [];
+	var starPositions = [];
 	for (var i = 0; i < 3; i++) {
-	  circlePositions.push([0, 0]);
+	  starPositions.push([0, 0]);
 	}
 
 	var initialState = {
 	  x: 0,
 	  y: 0,
-	  circlePositions: circlePositions
+	  starPositions: starPositions
 	};
 
 	function reducer() {
@@ -21974,22 +21974,14 @@
 	  switch (action.type) {
 	    case 'UPDATE':
 	      {
-	        /*
-	        state.circlePositions.forEach((elm, i) => {
-	          const rate = CIRCLE_PURSUIT_RATE - 0.2 * i;
-	          elm[0] += (state.x - elm[0]) * rate;
-	          elm[1] += (state.y - elm[1]) * rate;
-	        });
-	        */
-
-	        var newCirclePositions = state.circlePositions.map(function (elm, i) {
-	          var rate = CIRCLE_PURSUIT_RATE - 0.2 * i;
+	        var newStarPositions = state.starPositions.map(function (elm, i) {
+	          var rate = START_PURSUIT_RATE - 0.2 * i;
 	          elm[0] += (state.x - elm[0]) * rate;
 	          elm[1] += (state.y - elm[1]) * rate;
 	          return [elm[0], elm[1]];
 	        });
 
-	        return Object.assign({}, state, { circlePositions: newCirclePositions });
+	        return Object.assign({}, state, { starPositions: newStarPositions });
 	      }
 	    case 'MOUSEMOVE':
 	      {
@@ -22107,7 +22099,7 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var rows = this.props.circlePositions.map(function (elm) {
+	      var rows = this.props.starPositions.map(function (elm) {
 	        var style = {
 	          position: 'absolute',
 	          left: elm[0] + 'px',

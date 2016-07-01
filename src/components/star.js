@@ -26,7 +26,7 @@ export default class App extends React.Component {
   }
 
   render() {
-    let rows = this.props.circlePositions.map((elm) => {
+    let rows = this.props.starPositions.map((elm) => {
       let style = {
         position: 'absolute',
         left: `${elm[0]}px`,

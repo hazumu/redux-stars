@@ -67,13 +67,12 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var store = (0, _configureStore2.default)();
-	var rootEl = document.getElementById('root');
 
 	_reactDom2.default.render(_react2.default.createElement(
 	  _reactRedux.Provider,
 	  { store: store },
 	  _react2.default.createElement(_star2.default, null)
-	), rootEl);
+	), document.body);
 
 /***/ },
 /* 1 */
@@ -21953,7 +21952,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.default = reducer;
+	exports.default = app;
 	var START_PURSUIT_RATE = 0.50; // 収束率
 
 	var starPositions = [];
@@ -21962,12 +21961,14 @@
 	}
 
 	var initialState = {
-	  x: 0,
-	  y: 0,
-	  starPositions: starPositions
+	  star: {
+	    x: 0,
+	    y: 0,
+	    starPositions: starPositions
+	  }
 	};
 
-	function reducer() {
+	function star() {
 	  var state = arguments.length <= 0 || arguments[0] === undefined ? initialState : arguments[0];
 	  var action = arguments[1];
 
@@ -21992,6 +21993,15 @@
 	  }
 	}
 
+	function app() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? initialState : arguments[0];
+	  var action = arguments[1];
+
+	  return {
+	    star: star(state.star, action)
+	  };
+	}
+
 /***/ },
 /* 192 */
 /***/ function(module, exports, __webpack_require__) {
@@ -22002,13 +22012,15 @@
 	  value: true
 	});
 
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
 
 	var _reactRedux = __webpack_require__(168);
 
-	var _app = __webpack_require__(196);
+	var _app = __webpack_require__(193);
 
 	var _app2 = _interopRequireDefault(_app);
 
@@ -22016,7 +22028,17 @@
 
 	var _star2 = _interopRequireDefault(_star);
 
+	var _star3 = __webpack_require__(195);
+
+	var _star4 = _interopRequireDefault(_star3);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	function mapStateToProps(state) {
 	  return state;
@@ -22033,10 +22055,126 @@
 	  };
 	}
 
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_app2.default);
+	function star(Component) {
+	  var StarryComponent = function (_Component) {
+	    _inherits(StarryComponent, _Component);
+
+	    function StarryComponent(props) {
+	      _classCallCheck(this, StarryComponent);
+
+	      var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(StarryComponent).call(this, props));
+
+	      _this.isPlaying = false;
+	      return _this;
+	    }
+
+	    _createClass(StarryComponent, [{
+	      key: 'tick',
+	      value: function tick() {
+	        var _this2 = this;
+
+	        if (!this.isPlaying) return;
+
+	        this.props.handleUpdate();
+	        setTimeout(function () {
+	          _this2.tick();
+	        }, 1000 / 30);
+	      }
+	    }, {
+	      key: 'componentDidMount',
+	      value: function componentDidMount() {
+	        this.isPlaying = true;
+	        this.tick();
+	        document.addEventListener('mousemove', this.props.handleMousemove);
+	      }
+	    }, {
+	      key: 'componentWillUnmount',
+	      value: function componentWillUnmount() {
+	        this.isPlaying = false;
+	        document.removeEventListener('mousemove', this.props.handleMousemove);
+	      }
+	    }, {
+	      key: 'render',
+	      value: function render() {
+	        var rows = this.props.star.starPositions.map(function (elm) {
+	          var style = {
+	            position: 'absolute',
+	            left: elm[0] + 'px',
+	            top: elm[1] + 'px'
+	          };
+
+	          return _react2.default.createElement(_star4.default, { style: style });
+	        });
+
+	        return _react2.default.createElement(
+	          'div',
+	          null,
+	          rows,
+	          _react2.default.createElement(Component, null)
+	        );
+	      }
+	    }]);
+
+	    return StarryComponent;
+	  }(Component);
+
+	  return StarryComponent;
+	}
+
+	var StarryApp = star(_app2.default);
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(StarryApp);
 
 /***/ },
-/* 193 */,
+/* 193 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var App = function (_React$Component) {
+	  _inherits(App, _React$Component);
+
+	  function App() {
+	    _classCallCheck(this, App);
+
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(App).apply(this, arguments));
+	  }
+
+	  _createClass(App, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        ' Hello world! '
+	      );
+	    }
+	  }]);
+
+	  return App;
+	}(_react2.default.Component);
+
+	exports.default = App;
+
+/***/ },
 /* 194 */
 /***/ function(module, exports) {
 
@@ -22103,110 +22241,6 @@
 	}(_react2.default.Component);
 
 	exports.default = Star;
-
-/***/ },
-/* 196 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _star = __webpack_require__(195);
-
-	var _star2 = _interopRequireDefault(_star);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var App = function (_React$Component) {
-	  _inherits(App, _React$Component);
-
-	  function App(props) {
-	    _classCallCheck(this, App);
-
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this, props));
-
-	    _this.isPlaying = false;
-	    return _this;
-	  }
-
-	  _createClass(App, [{
-	    key: 'tick',
-	    value: function tick() {
-	      var _this2 = this;
-
-	      if (!this.isPlaying) return;
-
-	      this.props.handleUpdate();
-	      setTimeout(function () {
-	        _this2.tick();
-	      }, 1000 / 30);
-	    }
-	  }, {
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      this.isPlaying = true;
-	      this.tick();
-	      document.addEventListener('mousemove', this.props.handleMousemove);
-	    }
-	  }, {
-	    key: 'componentWillUnmount',
-	    value: function componentWillUnmount() {
-	      this.isPlaying = false;
-	      document.removeEventListener('mousemove', this.props.handleMousemove);
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var rows = this.props.starPositions.map(function (elm) {
-	        var style = {
-	          position: 'absolute',
-	          left: elm[0] + 'px',
-	          top: elm[1] + 'px'
-	        };
-
-	        return _react2.default.createElement(_star2.default, { style: style });
-	      });
-
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(
-	          'span',
-	          null,
-	          'x:',
-	          this.props.x
-	        ),
-	        ', ',
-	        _react2.default.createElement(
-	          'span',
-	          null,
-	          'y:',
-	          this.props.y
-	        ),
-	        rows
-	      );
-	    }
-	  }]);
-
-	  return App;
-	}(_react2.default.Component);
-
-	exports.default = App;
 
 /***/ }
 /******/ ]);

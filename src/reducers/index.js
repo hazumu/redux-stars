@@ -6,12 +6,14 @@ for (let i = 0; i < 3; i++) {
 }
 
 const initialState = {
-  x: 0,
-  y: 0,
-  starPositions: starPositions
+  star: {
+    x: 0,
+    y: 0,
+    starPositions: starPositions
+  }
 }
 
-export default function reducer(state = initialState, action) {
+function star(state = initialState, action) {
   switch(action.type) {
     case 'UPDATE': {
       const newStarPositions = state.starPositions.map((elm, i) => {
@@ -28,5 +30,11 @@ export default function reducer(state = initialState, action) {
     }
     default:
       return state
+  }
+}
+
+export default function app(state = initialState, action) {
+  return {
+    star: star(state.star, action)
   }
 }

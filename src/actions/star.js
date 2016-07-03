@@ -1,13 +1,17 @@
-export default {
-  mousemove: (e) => {
-    return { 
+// action types
+const MOUSEMOVE = 'MOUSEMOVE'
+const UPDATE = 'UPDATE'
+
+// action creators
+export function mousemove(e) {
+  return {
       e: e,
-      type: 'MOUSEMOVE' 
-    }
-  },
-  update: () => {
-    return { 
-      type: 'UPDATE' 
-    }
+      type: MOUSEMOVE
+  }
+}
+
+export function update() {
+  return { 
+    type: UPDATE
   }
 }

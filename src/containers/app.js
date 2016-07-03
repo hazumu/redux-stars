@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import App from '../components/app'
-import AppActions from '../actions/star'
+import {mousemove, update} from '../actions/star'
 import Star from '../components/atoms/star';
 
 function mapStateToProps(state) {
@@ -10,13 +10,17 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    handleMousemove: (e) => { dispatch(AppActions.mousemove(e)) },
-    handleUpdate: () => { dispatch(AppActions.update()) }
+    handleMousemove: (e) => { dispatch(mousemove(e)) },
+    handleUpdate: () => { dispatch(update()) }
   }
 }
 
 function star(Component) {
   class StarryComponent extends Component {
+    static get FPS() {
+      return 30;
+    }
+
     constructor(props) {
       super(props);
       this.isPlaying = false;
@@ -26,7 +30,7 @@ function star(Component) {
       if (!this.isPlaying) return;
 
       this.props.handleUpdate();
-      setTimeout(() => {this.tick();}, 1000 / 30);
+      setTimeout(() => {this.tick();}, 1000 / StarryComponent.FPS);
     }
 
     componentDidMount() {
@@ -45,7 +49,9 @@ function star(Component) {
         const style = {
           position: 'absolute',
           left: `${elm[0]}px`,
-          top: `${elm[1]}px`
+          top: `${elm[1]}px`,
+          marginTop: '-10px',
+          marginLeft: '-10px'
         };
 
         return (<Star style={style} />);

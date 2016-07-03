@@ -1,7 +1,8 @@
-const START_PURSUIT_RATE = 0.50;  // 収束率
+const STAR_COUNT = 10;
+const STAR_PURSUIT_RATE = 0.50;
 
 var starPositions = [];
-for (let i = 0; i < 3; i++) {
+for (let i = 0; i < STAR_COUNT; i++) {
   starPositions.push([0, 0]);
 }
 
@@ -17,9 +18,10 @@ function star(state = initialState, action) {
   switch(action.type) {
     case 'UPDATE': {
       const newStarPositions = state.starPositions.map((elm, i) => {
-        const rate = START_PURSUIT_RATE - 0.2 * i;
-        elm[0] += (state.x - elm[0]) * rate;
-        elm[1] += (state.y - elm[1]) * rate;
+        const targetX = (i === 0) ? state.x : state.starPositions[i - 1][0]
+        const targetY = (i === 0) ? state.y : state.starPositions[i - 1][1]
+        elm[0] += (targetX - elm[0]) * STAR_PURSUIT_RATE;
+        elm[1] += (targetY - elm[1]) * STAR_PURSUIT_RATE;
         return [elm[0], elm[1]];
       });
 

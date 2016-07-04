@@ -10,11 +10,12 @@ const initialState = {
   star: {
     x: 0,
     y: 0,
-    starCoords: starCoords
+    starCoords: starCoords,
+    isEnabled: true
   }
 }
 
-function star(state = initialState, action) {
+function star(state = initialState.star, action) {
   switch(action.type) {
     case 'UPDATE': {
       const newStarCoords = state.starCoords.map((elm, i) => {
@@ -30,6 +31,12 @@ function star(state = initialState, action) {
     }
     case 'MOUSEMOVE': {
       return Object.assign({}, state, { x: action.e.x, y: action.e.y });
+    }
+    case 'INITIALIZE_STAR': {
+      return Object.assign({}, state, initialState.star);
+    }
+    case 'DID_STARS_UNMOUNTED': {
+      return Object.assign({}, state, { isEnabled: false });
     }
     default:
       return state

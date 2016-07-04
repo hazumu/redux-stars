@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import App from '../components/app'
-import {mousemove, update} from '../actions/star'
+import { mousemove, update, initializeStar, didStarsUnmounted } from '../actions/star'
 import Stars from '../components/molecules/stars';
 
 function mapStateToProps(state) {
@@ -11,7 +11,9 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     handleMousemove: (e) => { dispatch(mousemove(e)) },
-    handleUpdate: () => { dispatch(update()) }
+    handleUpdate: () => { dispatch(update()) },
+    handleInitializeStar: () => { dispatch(initializeStar()) },
+    handleDidStarsUnmounted: () => { dispatch(didStarsUnmounted()) }
   }
 }
 
@@ -21,27 +23,23 @@ function star(Component) {
       return 30;
     }
 
-    constructor(props) {
-      super(props);
-      this.isPlaying = false;
-    }
-
     tick() {
-      if (!this.isPlaying) return;
-
-      this.props.handleUpdate();
-      setTimeout(() => {this.tick();}, 1000 / StarryComponent.FPS);
+      if (this.props.star.isEnabled) {
+        this.props.handleUpdate()
+        setTimeout(() => {this.tick();}, 1000 / StarryComponent.FPS);
+      } else {
+        this.props.handleInitializeStar()
+      }
     }
 
     componentDidMount() {
-      this.isPlaying = true;
-      this.tick();
-      document.addEventListener('mousemove', this.props.handleMousemove);
+      this.tick()
+      document.addEventListener('mousemove', this.props.handleMousemove)
     }
 
     componentWillUnmount() {
-      this.isPlaying = false;
-      document.removeEventListener('mousemove', this.props.handleMousemove);
+      this.props.handleDidStarsUnmounted()
+      document.removeEventListener('mousemove', this.props.handleMousemove)
     }
 
     render() {

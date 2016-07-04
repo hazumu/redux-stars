@@ -72,7 +72,7 @@
 	  _reactRedux.Provider,
 	  { store: store },
 	  _react2.default.createElement(_app2.default, null)
-	), document.body);
+	), document.getElementById('root'));
 
 /***/ },
 /* 1 */

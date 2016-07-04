@@ -1,3 +1,5 @@
+import { MOUSEMOVE, UPDATE, INITIALIZE_STAR, DID_STARS_UNMOUNTED } from '../actions/actionTypes'
+
 const STAR_COUNT = 10;
 const STAR_CONVERGENCE_RATE = 0.50;
 
@@ -17,7 +19,7 @@ const initialState = {
 
 function star(state = initialState.star, action) {
   switch(action.type) {
-    case 'UPDATE': {
+    case UPDATE: {
       const newStarCoords = state.starCoords.map((elm, i) => {
         const [targetX, targetY] = (i === 0) 
           ? [state.x, state.y] 
@@ -29,13 +31,13 @@ function star(state = initialState.star, action) {
 
       return Object.assign({}, state, { starCoords: newStarCoords });
     }
-    case 'MOUSEMOVE': {
+    case MOUSEMOVE: {
       return Object.assign({}, state, { x: action.e.x, y: action.e.y });
     }
-    case 'INITIALIZE_STAR': {
+    case INITIALIZE_STAR: {
       return Object.assign({}, state, initialState.star);
     }
-    case 'DID_STARS_UNMOUNTED': {
+    case DID_STARS_UNMOUNTED: {
       return Object.assign({}, state, { isEnabled: false });
     }
     default:

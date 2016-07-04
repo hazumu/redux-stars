@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import App from '../components/app'
-import { mousemove, update, initializeStar, didStarsUnmounted } from '../actions/star'
+import { mousemove, update, initializeStar, didStarsUnmounted } from '../actions/actionCreators'
 import Stars from '../components/molecules/stars';
 
 function mapStateToProps(state) {

@@ -1,8 +1,4 @@
-// action types
-export const MOUSEMOVE = 'MOUSEMOVE'
-export const UPDATE = 'UPDATE'
-export const INITIALIZE_STAR = 'INITIALIZE_STAR'
-export const DID_STARS_UNMOUNTED = 'DID_STARS_UNMOUNTED'
+import { MOUSEMOVE, UPDATE, INITIALIZE_STAR, DID_STARS_UNMOUNTED } from './actionTypes'
 
 // action creators
 export function mousemove(e) {

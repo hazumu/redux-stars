@@ -21945,7 +21945,7 @@
 
 /***/ },
 /* 191 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -21956,6 +21956,9 @@
 	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
 	exports.default = app;
+
+	var _actionTypes = __webpack_require__(199);
+
 	var STAR_COUNT = 10;
 	var STAR_CONVERGENCE_RATE = 0.50;
 
@@ -21978,7 +21981,7 @@
 	  var action = arguments[1];
 
 	  switch (action.type) {
-	    case 'UPDATE':
+	    case _actionTypes.UPDATE:
 	      {
 	        var newStarCoords = state.starCoords.map(function (elm, i) {
 	          var _ref = i === 0 ? [state.x, state.y] : [state.starCoords[i - 1][0], state.starCoords[i - 1][1]];
@@ -21995,15 +21998,15 @@
 
 	        return Object.assign({}, state, { starCoords: newStarCoords });
 	      }
-	    case 'MOUSEMOVE':
+	    case _actionTypes.MOUSEMOVE:
 	      {
 	        return Object.assign({}, state, { x: action.e.x, y: action.e.y });
 	      }
-	    case 'INITIALIZE_STAR':
+	    case _actionTypes.INITIALIZE_STAR:
 	      {
 	        return Object.assign({}, state, initialState.star);
 	      }
-	    case 'DID_STARS_UNMOUNTED':
+	    case _actionTypes.DID_STARS_UNMOUNTED:
 	      {
 	        return Object.assign({}, state, { isEnabled: false });
 	      }
@@ -22043,7 +22046,7 @@
 
 	var _app2 = _interopRequireDefault(_app);
 
-	var _star = __webpack_require__(194);
+	var _actionCreators = __webpack_require__(198);
 
 	var _stars = __webpack_require__(195);
 
@@ -22064,16 +22067,16 @@
 	function mapDispatchToProps(dispatch) {
 	  return {
 	    handleMousemove: function handleMousemove(e) {
-	      dispatch((0, _star.mousemove)(e));
+	      dispatch((0, _actionCreators.mousemove)(e));
 	    },
 	    handleUpdate: function handleUpdate() {
-	      dispatch((0, _star.update)());
+	      dispatch((0, _actionCreators.update)());
 	    },
 	    handleInitializeStar: function handleInitializeStar() {
-	      dispatch((0, _star.initializeStar)());
+	      dispatch((0, _actionCreators.initializeStar)());
 	    },
 	    handleDidStarsUnmounted: function handleDidStarsUnmounted() {
-	      dispatch((0, _star.didStarsUnmounted)());
+	      dispatch((0, _actionCreators.didStarsUnmounted)());
 	    }
 	  };
 	}
@@ -22188,51 +22191,7 @@
 	exports.default = App;
 
 /***/ },
-/* 194 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.mousemove = mousemove;
-	exports.update = update;
-	exports.initializeStar = initializeStar;
-	exports.didStarsUnmounted = didStarsUnmounted;
-	// action types
-	var MOUSEMOVE = exports.MOUSEMOVE = 'MOUSEMOVE';
-	var UPDATE = exports.UPDATE = 'UPDATE';
-	var INITIALIZE_STAR = exports.INITIALIZE_STAR = 'INITIALIZE_STAR';
-	var DID_STARS_UNMOUNTED = exports.DID_STARS_UNMOUNTED = 'DID_STARS_UNMOUNTED';
-
-	// action creators
-	function mousemove(e) {
-	  return {
-	    e: e,
-	    type: MOUSEMOVE
-	  };
-	}
-
-	function update() {
-	  return {
-	    type: UPDATE
-	  };
-	}
-
-	function initializeStar() {
-	  return {
-	    type: INITIALIZE_STAR
-	  };
-	}
-
-	function didStarsUnmounted() {
-	  return {
-	    type: DID_STARS_UNMOUNTED
-	  };
-	}
-
-/***/ },
+/* 194 */,
 /* 195 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -22341,6 +22300,64 @@
 	}(_react2.default.Component);
 
 	exports.default = Star;
+
+/***/ },
+/* 197 */,
+/* 198 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.mousemove = mousemove;
+	exports.update = update;
+	exports.initializeStar = initializeStar;
+	exports.didStarsUnmounted = didStarsUnmounted;
+
+	var _actionTypes = __webpack_require__(199);
+
+	// action creators
+	function mousemove(e) {
+	  return {
+	    e: e,
+	    type: _actionTypes.MOUSEMOVE
+	  };
+	}
+
+	function update() {
+	  return {
+	    type: _actionTypes.UPDATE
+	  };
+	}
+
+	function initializeStar() {
+	  return {
+	    type: _actionTypes.INITIALIZE_STAR
+	  };
+	}
+
+	function didStarsUnmounted() {
+	  return {
+	    type: _actionTypes.DID_STARS_UNMOUNTED
+	  };
+	}
+
+/***/ },
+/* 199 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	// action types
+	var MOUSEMOVE = exports.MOUSEMOVE = 'redux-stars/MOUSEMOVE';
+	var UPDATE = exports.UPDATE = 'redux-stars/UPDATE';
+	var INITIALIZE_STAR = exports.INITIALIZE_STAR = 'redux-stars/INITIALIZE_STAR';
+	var DID_STARS_UNMOUNTED = exports.DID_STARS_UNMOUNTED = 'redux-stars/DID_STARS_UNMOUNTED';
 
 /***/ }
 /******/ ]);

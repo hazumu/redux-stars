@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import App from '../components/app'
 import {mousemove, update} from '../actions/star'
-import Star from '../components/atoms/star';
+import Stars from '../components/molecules/stars';
 
 function mapStateToProps(state) {
   return state;
@@ -45,24 +45,10 @@ function star(Component) {
     }
 
     render() {
-      const rows = this.props.star.starCoords.map((elm) => {
-        const style = {
-          position: 'absolute',
-          left: `${elm[0]}px`,
-          top: `${elm[1]}px`,
-          marginTop: '-10px',
-          marginLeft: '-10px'
-        };
-
-        return (<Star style={style} />);
-      });
-
       return (
-          <div>
-            {rows}
-            <Component>
-            </Component>
-          </div>
+        <Stars starCoords={this.props.star.starCoords}>
+          <Component />
+        </Stars>
       );
     }
   }

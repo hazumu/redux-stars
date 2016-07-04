@@ -21952,20 +21952,23 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+
+	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
 	exports.default = app;
 	var STAR_COUNT = 10;
-	var STAR_PURSUIT_RATE = 0.50;
+	var STAR_CONVERGENCE_RATE = 0.50;
 
-	var starPositions = [];
+	var starCoords = [];
 	for (var i = 0; i < STAR_COUNT; i++) {
-	  starPositions.push([0, 0]);
+	  starCoords.push([0, 0]);
 	}
 
 	var initialState = {
 	  star: {
 	    x: 0,
 	    y: 0,
-	    starPositions: starPositions
+	    starCoords: starCoords
 	  }
 	};
 
@@ -21976,15 +21979,20 @@
 	  switch (action.type) {
 	    case 'UPDATE':
 	      {
-	        var newStarPositions = state.starPositions.map(function (elm, i) {
-	          var targetX = i === 0 ? state.x : state.starPositions[i - 1][0];
-	          var targetY = i === 0 ? state.y : state.starPositions[i - 1][1];
-	          elm[0] += (targetX - elm[0]) * STAR_PURSUIT_RATE;
-	          elm[1] += (targetY - elm[1]) * STAR_PURSUIT_RATE;
+	        var newStarCoords = state.starCoords.map(function (elm, i) {
+	          var _ref = i === 0 ? [state.x, state.y] : [state.starCoords[i - 1][0], state.starCoords[i - 1][1]];
+
+	          var _ref2 = _slicedToArray(_ref, 2);
+
+	          var targetX = _ref2[0];
+	          var targetY = _ref2[1];
+
+	          elm[0] += (targetX - elm[0]) * STAR_CONVERGENCE_RATE;
+	          elm[1] += (targetY - elm[1]) * STAR_CONVERGENCE_RATE;
 	          return [elm[0], elm[1]];
 	        });
 
-	        return Object.assign({}, state, { starPositions: newStarPositions });
+	        return Object.assign({}, state, { starCoords: newStarCoords });
 	      }
 	    case 'MOUSEMOVE':
 	      {
@@ -22180,7 +22188,7 @@
 	}
 
 	function star(Component) {
-	  var StarryComponent = function (_Component) {
+	  return function (_Component) {
 	    _inherits(StarryComponent, _Component);
 
 	    _createClass(StarryComponent, null, [{
@@ -22227,7 +22235,7 @@
 	    }, {
 	      key: 'render',
 	      value: function render() {
-	        var rows = this.props.star.starPositions.map(function (elm) {
+	        var rows = this.props.star.starCoords.map(function (elm) {
 	          var style = {
 	            position: 'absolute',
 	            left: elm[0] + 'px',
@@ -22250,8 +22258,6 @@
 
 	    return StarryComponent;
 	  }(Component);
-
-	  return StarryComponent;
 	}
 
 	var StarryApp = star(_app2.default);

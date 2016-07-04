@@ -16,7 +16,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 function star(Component) {
-  class StarryComponent extends Component {
+  return class StarryComponent extends Component {
     static get FPS() {
       return 30;
     }
@@ -45,7 +45,7 @@ function star(Component) {
     }
 
     render() {
-      const rows = this.props.star.starPositions.map((elm) => {
+      const rows = this.props.star.starCoords.map((elm) => {
         const style = {
           position: 'absolute',
           left: `${elm[0]}px`,
@@ -66,8 +66,6 @@ function star(Component) {
       );
     }
   }
-
-  return StarryComponent;
 }
 
 const StarryApp = star(App);

@@ -1,11 +1,7 @@
 import React from 'react';
 
-export default class Star extends React.Component {
-
-  render() {
-    return (
-        <img src="./img/star.svg" style={this.props.style} width="20" />
-    );
-  }
-
+export default function ({ style }) {
+  return (
+    <img src="./img/star.svg" style={style} width="20" role="presentation" />
+  );
 }

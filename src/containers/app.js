@@ -18,7 +18,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 function star(Component) {
-  return class StarryComponent extends Component {
+  return class StarryComponent extends React.Component {
     static get FPS() {
       return 30;
     }

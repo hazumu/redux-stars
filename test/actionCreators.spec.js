@@ -3,7 +3,6 @@ import { MOUSEMOVE, UPDATE, INITIALIZE_STAR, DID_STARS_UNMOUNTED } from '../src/
 import { mousemove, update, initializeStar, didStarsUnmounted } from '../src/actions/actionCreators';
 
 describe('actions', () => {
-
   it('should create mousemove action', () => {
     const e = {};
     expect(mousemove(e)).toEqual({
@@ -29,5 +28,4 @@ describe('actions', () => {
       type: DID_STARS_UNMOUNTED,
     });
   });
-
 });

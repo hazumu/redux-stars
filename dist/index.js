@@ -21952,6 +21952,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	exports.initialState = exports.STAR_CONVERGENCE_RATE = undefined;
 
 	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
@@ -21960,14 +21961,14 @@
 	var _actionTypes = __webpack_require__(192);
 
 	var STAR_COUNT = 10;
-	var STAR_CONVERGENCE_RATE = 0.30;
+	var STAR_CONVERGENCE_RATE = exports.STAR_CONVERGENCE_RATE = 0.30;
 
 	var starCoords = [];
 	for (var i = 0; i < STAR_COUNT; i++) {
 	  starCoords.push([0, 0]);
 	}
 
-	var initialState = {
+	var initialState = exports.initialState = {
 	  star: {
 	    x: 0,
 	    y: 0,

@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
-export default class Star extends React.Component {
-
-  render() {
-    return (
-        <img src="./img/star.svg" style={this.props.style} width="20" />
-    );
-  }
-
+export default function Star({ style }) {
+  return (
+    <img src="./img/star.svg" style={style} width="20" role="presentation" />
+  );
 }
+
+Star.propTypes = {
+  style: PropTypes.object.isRequired,
+};

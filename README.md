@@ -12,6 +12,19 @@ npm install eslint eslint-plugin-react -g
 
 ## Lint
 
+*setting*
+
 ```
 npm install -g --save-dev eslint-config-airbnb eslint-plugin-import eslint-plugin-react eslint-plugin-jsx-a11y
+```
+*execute*
+
+```
+npm run lint
+```
+
+*auto correct*
+
+```
+eslint ./src --fix
 ```

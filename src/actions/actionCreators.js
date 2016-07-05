@@ -1,27 +1,27 @@
-import { MOUSEMOVE, UPDATE, INITIALIZE_STAR, DID_STARS_UNMOUNTED } from './actionTypes'
+import { MOUSEMOVE, UPDATE, INITIALIZE_STAR, DID_STARS_UNMOUNTED } from './actionTypes';
 
 // action creators
 export function mousemove(e) {
   return {
-      e: e,
-      type: MOUSEMOVE
-  }
+    e,
+    type: MOUSEMOVE,
+  };
 }
 
 export function update() {
-  return { 
-    type: UPDATE
-  }
+  return {
+    type: UPDATE,
+  };
 }
 
 export function initializeStar() {
-  return { 
-    type: INITIALIZE_STAR
-  }
+  return {
+    type: INITIALIZE_STAR,
+  };
 }
 
 export function didStarsUnmounted() {
-  return { 
-    type: DID_STARS_UNMOUNTED
-  }
+  return {
+    type: DID_STARS_UNMOUNTED,
+  };
 }

@@ -60,7 +60,7 @@
 
 	var _configureStore2 = _interopRequireDefault(_configureStore);
 
-	var _app = __webpack_require__(192);
+	var _app = __webpack_require__(193);
 
 	var _app2 = _interopRequireDefault(_app);
 
@@ -21938,8 +21938,8 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function configureStore(initialState) {
-	  var store = (0, _redux.createStore)(_index2.default, initialState, window.devToolsExtension && window.devToolsExtension());
+	function configureStore() {
+	  var store = (0, _redux.createStore)(_index2.default);
 	  return store;
 	}
 
@@ -21957,7 +21957,7 @@
 
 	exports.default = app;
 
-	var _actionTypes = __webpack_require__(199);
+	var _actionTypes = __webpack_require__(192);
 
 	var STAR_COUNT = 10;
 	var STAR_CONVERGENCE_RATE = 0.30;
@@ -22031,6 +22031,21 @@
 
 /***/ },
 /* 192 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	// action types
+	var MOUSEMOVE = exports.MOUSEMOVE = 'redux-stars/MOUSEMOVE';
+	var UPDATE = exports.UPDATE = 'redux-stars/UPDATE';
+	var INITIALIZE_STAR = exports.INITIALIZE_STAR = 'redux-stars/INITIALIZE_STAR';
+	var DID_STARS_UNMOUNTED = exports.DID_STARS_UNMOUNTED = 'redux-stars/DID_STARS_UNMOUNTED';
+
+/***/ },
+/* 193 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22047,13 +22062,13 @@
 
 	var _reactRedux = __webpack_require__(168);
 
-	var _app = __webpack_require__(193);
+	var _app = __webpack_require__(194);
 
 	var _app2 = _interopRequireDefault(_app);
 
-	var _actionCreators = __webpack_require__(198);
+	var _actionCreators = __webpack_require__(195);
 
-	var _stars = __webpack_require__(195);
+	var _stars = __webpack_require__(196);
 
 	var _stars2 = _interopRequireDefault(_stars);
 
@@ -22087,8 +22102,8 @@
 	}
 
 	function star(Component) {
-	  return function (_Component) {
-	    _inherits(StarryComponent, _Component);
+	  var StarryComponent = function (_React$Component) {
+	    _inherits(StarryComponent, _React$Component);
 
 	    function StarryComponent() {
 	      _classCallCheck(this, StarryComponent);
@@ -22097,6 +22112,18 @@
 	    }
 
 	    _createClass(StarryComponent, [{
+	      key: 'componentDidMount',
+	      value: function componentDidMount() {
+	        this.tick();
+	        document.addEventListener('mousemove', this.props.handleMousemove);
+	      }
+	    }, {
+	      key: 'componentWillUnmount',
+	      value: function componentWillUnmount() {
+	        this.props.handleDidStarsUnmounted();
+	        document.removeEventListener('mousemove', this.props.handleMousemove);
+	      }
+	    }, {
 	      key: 'tick',
 	      value: function tick() {
 	        var _this2 = this;
@@ -22109,18 +22136,6 @@
 	        } else {
 	          this.props.handleInitializeStar();
 	        }
-	      }
-	    }, {
-	      key: 'componentDidMount',
-	      value: function componentDidMount() {
-	        this.tick();
-	        document.addEventListener('mousemove', this.props.handleMousemove);
-	      }
-	    }, {
-	      key: 'componentWillUnmount',
-	      value: function componentWillUnmount() {
-	        this.props.handleDidStarsUnmounted();
-	        document.removeEventListener('mousemove', this.props.handleMousemove);
 	      }
 	    }, {
 	      key: 'render',
@@ -22139,7 +22154,17 @@
 	    }]);
 
 	    return StarryComponent;
-	  }(Component);
+	  }(_react2.default.Component);
+
+	  StarryComponent.propTypes = {
+	    star: _react.PropTypes.object.isRequired,
+	    handleDidStarsUnmounted: _react.PropTypes.func.isRequired,
+	    handleInitializeStar: _react.PropTypes.func.isRequired,
+	    handleMousemove: _react.PropTypes.func.isRequired,
+	    handleUpdate: _react.PropTypes.func.isRequired
+	  };
+
+	  return StarryComponent;
 	}
 
 	var StarryApp = star(_app2.default);
@@ -22147,7 +22172,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(StarryApp);
 
 /***/ },
-/* 193 */
+/* 194 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22156,7 +22181,13 @@
 	  value: true
 	});
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	exports.default = function () {
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    ' Hello world! '
+	  );
+	};
 
 	var _react = __webpack_require__(1);
 
@@ -22164,151 +22195,8 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var App = function (_React$Component) {
-	  _inherits(App, _React$Component);
-
-	  function App() {
-	    _classCallCheck(this, App);
-
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(App).apply(this, arguments));
-	  }
-
-	  _createClass(App, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        ' Hello world! '
-	      );
-	    }
-	  }]);
-
-	  return App;
-	}(_react2.default.Component);
-
-	exports.default = App;
-
 /***/ },
-/* 194 */,
 /* 195 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _star = __webpack_require__(196);
-
-	var _star2 = _interopRequireDefault(_star);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Stars = function (_React$Component) {
-	  _inherits(Stars, _React$Component);
-
-	  function Stars() {
-	    _classCallCheck(this, Stars);
-
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Stars).apply(this, arguments));
-	  }
-
-	  _createClass(Stars, [{
-	    key: 'render',
-	    value: function render() {
-
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        this.props.starCoords.map(function (elm) {
-	          var style = {
-	            position: 'absolute',
-	            left: elm[0] + 'px',
-	            top: elm[1] + 'px',
-	            marginTop: '-10px',
-	            marginLeft: '-10px'
-	          };
-
-	          return _react2.default.createElement(_star2.default, { style: style });
-	        }),
-	        this.props.children
-	      );
-	    }
-	  }]);
-
-	  return Stars;
-	}(_react2.default.Component);
-
-	exports.default = Stars;
-
-/***/ },
-/* 196 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Star = function (_React$Component) {
-	  _inherits(Star, _React$Component);
-
-	  function Star() {
-	    _classCallCheck(this, Star);
-
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Star).apply(this, arguments));
-	  }
-
-	  _createClass(Star, [{
-	    key: "render",
-	    value: function render() {
-	      return _react2.default.createElement("img", { src: "./img/star.svg", style: this.props.style, width: "20" });
-	    }
-	  }]);
-
-	  return Star;
-	}(_react2.default.Component);
-
-	exports.default = Star;
-
-/***/ },
-/* 197 */,
-/* 198 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22321,7 +22209,7 @@
 	exports.initializeStar = initializeStar;
 	exports.didStarsUnmounted = didStarsUnmounted;
 
-	var _actionTypes = __webpack_require__(199);
+	var _actionTypes = __webpack_require__(192);
 
 	// action creators
 	function mousemove(e) {
@@ -22350,19 +22238,79 @@
 	}
 
 /***/ },
-/* 199 */
-/***/ function(module, exports) {
+/* 196 */
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	// action types
-	var MOUSEMOVE = exports.MOUSEMOVE = 'redux-stars/MOUSEMOVE';
-	var UPDATE = exports.UPDATE = 'redux-stars/UPDATE';
-	var INITIALIZE_STAR = exports.INITIALIZE_STAR = 'redux-stars/INITIALIZE_STAR';
-	var DID_STARS_UNMOUNTED = exports.DID_STARS_UNMOUNTED = 'redux-stars/DID_STARS_UNMOUNTED';
+	exports.default = Stars;
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _star = __webpack_require__(197);
+
+	var _star2 = _interopRequireDefault(_star);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function Stars(_ref) {
+	  var starCoords = _ref.starCoords;
+	  var children = _ref.children;
+
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    starCoords.map(function (elm) {
+	      var style = {
+	        position: 'absolute',
+	        left: elm[0] + 'px',
+	        top: elm[1] + 'px',
+	        marginTop: '-10px',
+	        marginLeft: '-10px'
+	      };
+
+	      return _react2.default.createElement(_star2.default, { style: style });
+	    }),
+	    children
+	  );
+	}
+
+	Stars.propTypes = {
+	  starCoords: _react.PropTypes.array.isRequired,
+	  children: _react.PropTypes.object.isRequired
+	};
+
+/***/ },
+/* 197 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = Star;
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function Star(_ref) {
+	  var style = _ref.style;
+
+	  return _react2.default.createElement("img", { src: "./img/star.svg", style: style, width: "20", role: "presentation" });
+	}
+
+	Star.propTypes = {
+	  style: _react.PropTypes.object.isRequired
+	};
 
 /***/ }
 /******/ ]);

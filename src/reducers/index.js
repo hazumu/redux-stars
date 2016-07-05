@@ -1,14 +1,14 @@
 import { MOUSEMOVE, UPDATE, INITIALIZE_STAR, DID_STARS_UNMOUNTED } from '../actions/actionTypes';
 
 const STAR_COUNT = 10;
-const STAR_CONVERGENCE_RATE = 0.30;
+export const STAR_CONVERGENCE_RATE = 0.30;
 
 const starCoords = [];
 for (let i = 0; i < STAR_COUNT; i++) {
   starCoords.push([0, 0]);
 }
 
-const initialState = {
+export const initialState = {
   star: {
     x: 0,
     y: 0,

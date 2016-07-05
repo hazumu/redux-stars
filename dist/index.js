@@ -21960,7 +21960,7 @@
 	var _actionTypes = __webpack_require__(199);
 
 	var STAR_COUNT = 10;
-	var STAR_CONVERGENCE_RATE = 0.50;
+	var STAR_CONVERGENCE_RATE = 0.30;
 
 	var starCoords = [];
 	for (var i = 0; i < STAR_COUNT; i++) {
@@ -21984,6 +21984,11 @@
 	    case _actionTypes.UPDATE:
 	      {
 	        var newStarCoords = state.starCoords.map(function (elm, i) {
+	          var _elm = _slicedToArray(elm, 2);
+
+	          var x = _elm[0];
+	          var y = _elm[1];
+
 	          var _ref = i === 0 ? [state.x, state.y] : [state.starCoords[i - 1][0], state.starCoords[i - 1][1]];
 
 	          var _ref2 = _slicedToArray(_ref, 2);
@@ -21991,9 +21996,9 @@
 	          var targetX = _ref2[0];
 	          var targetY = _ref2[1];
 
-	          elm[0] += (targetX - elm[0]) * STAR_CONVERGENCE_RATE;
-	          elm[1] += (targetY - elm[1]) * STAR_CONVERGENCE_RATE;
-	          return [elm[0], elm[1]];
+	          x += (targetX - x) * STAR_CONVERGENCE_RATE;
+	          y += (targetY - y) * STAR_CONVERGENCE_RATE;
+	          return [x, y];
 	        });
 
 	        return Object.assign({}, state, { starCoords: newStarCoords });

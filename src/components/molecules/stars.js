@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Star from '../atoms/star';
 
-export default function (props) {
+export default function Stars({ starCoords, children }) {
   return (
     <div>
-      {props.starCoords.map((elm) => {
+      {starCoords.map((elm) => {
         const style = {
           position: 'absolute',
           left: `${elm[0]}px`,
@@ -16,7 +16,12 @@ export default function (props) {
         return (<Star style={style} />);
       })}
 
-      {props.children}
+      {children}
     </div>
   );
 }
+
+Stars.propTypes = {
+  starCoords: PropTypes.array.isRequired,
+  children: PropTypes.object.isRequired,
+};

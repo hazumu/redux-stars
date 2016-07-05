@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import App from '../components/app';
 import { mousemove, update, initializeStar, didStarsUnmounted } from '../actions/actionCreators';
@@ -18,18 +18,9 @@ function mapDispatchToProps(dispatch) {
 }
 
 function star(Component) {
-  return class StarryComponent extends React.Component {
+  class StarryComponent extends React.Component {
     static get FPS() {
       return 30;
-    }
-
-    tick() {
-      if (this.props.star.isEnabled) {
-        this.props.handleUpdate();
-        setTimeout(() => { this.tick(); }, 1000 / StarryComponent.FPS);
-      } else {
-        this.props.handleInitializeStar();
-      }
     }
 
     componentDidMount() {
@@ -42,6 +33,15 @@ function star(Component) {
       document.removeEventListener('mousemove', this.props.handleMousemove);
     }
 
+    tick() {
+      if (this.props.star.isEnabled) {
+        this.props.handleUpdate();
+        setTimeout(() => { this.tick(); }, 1000 / StarryComponent.FPS);
+      } else {
+        this.props.handleInitializeStar();
+      }
+    }
+
     render() {
       return (
         <Stars starCoords={this.props.star.starCoords}>
@@ -49,7 +49,17 @@ function star(Component) {
         </Stars>
       );
     }
+  }
+
+  StarryComponent.propTypes = {
+    star: PropTypes.object.isRequired,
+    handleDidStarsUnmounted: PropTypes.func.isRequired,
+    handleInitializeStar: PropTypes.func.isRequired,
+    handleMousemove: PropTypes.func.isRequired,
+    handleUpdate: PropTypes.func.isRequired,
   };
+
+  return StarryComponent;
 }
 
 const StarryApp = star(App);

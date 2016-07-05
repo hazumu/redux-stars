@@ -22102,7 +22102,7 @@
 	}
 
 	function star(Component) {
-	  return function (_React$Component) {
+	  var StarryComponent = function (_React$Component) {
 	    _inherits(StarryComponent, _React$Component);
 
 	    function StarryComponent() {
@@ -22112,6 +22112,18 @@
 	    }
 
 	    _createClass(StarryComponent, [{
+	      key: 'componentDidMount',
+	      value: function componentDidMount() {
+	        this.tick();
+	        document.addEventListener('mousemove', this.props.handleMousemove);
+	      }
+	    }, {
+	      key: 'componentWillUnmount',
+	      value: function componentWillUnmount() {
+	        this.props.handleDidStarsUnmounted();
+	        document.removeEventListener('mousemove', this.props.handleMousemove);
+	      }
+	    }, {
 	      key: 'tick',
 	      value: function tick() {
 	        var _this2 = this;
@@ -22124,18 +22136,6 @@
 	        } else {
 	          this.props.handleInitializeStar();
 	        }
-	      }
-	    }, {
-	      key: 'componentDidMount',
-	      value: function componentDidMount() {
-	        this.tick();
-	        document.addEventListener('mousemove', this.props.handleMousemove);
-	      }
-	    }, {
-	      key: 'componentWillUnmount',
-	      value: function componentWillUnmount() {
-	        this.props.handleDidStarsUnmounted();
-	        document.removeEventListener('mousemove', this.props.handleMousemove);
 	      }
 	    }, {
 	      key: 'render',
@@ -22155,6 +22155,16 @@
 
 	    return StarryComponent;
 	  }(_react2.default.Component);
+
+	  StarryComponent.propTypes = {
+	    star: _react.PropTypes.object.isRequired,
+	    handleDidStarsUnmounted: _react.PropTypes.func.isRequired,
+	    handleInitializeStar: _react.PropTypes.func.isRequired,
+	    handleMousemove: _react.PropTypes.func.isRequired,
+	    handleUpdate: _react.PropTypes.func.isRequired
+	  };
+
+	  return StarryComponent;
 	}
 
 	var StarryApp = star(_app2.default);
@@ -22236,25 +22246,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-
-	exports.default = function (props) {
-	  return _react2.default.createElement(
-	    'div',
-	    null,
-	    props.starCoords.map(function (elm) {
-	      var style = {
-	        position: 'absolute',
-	        left: elm[0] + 'px',
-	        top: elm[1] + 'px',
-	        marginTop: '-10px',
-	        marginLeft: '-10px'
-	      };
-
-	      return _react2.default.createElement(_star2.default, { style: style });
-	    }),
-	    props.children
-	  );
-	};
+	exports.default = Stars;
 
 	var _react = __webpack_require__(1);
 
@@ -22266,6 +22258,33 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	function Stars(_ref) {
+	  var starCoords = _ref.starCoords;
+	  var children = _ref.children;
+
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    starCoords.map(function (elm) {
+	      var style = {
+	        position: 'absolute',
+	        left: elm[0] + 'px',
+	        top: elm[1] + 'px',
+	        marginTop: '-10px',
+	        marginLeft: '-10px'
+	      };
+
+	      return _react2.default.createElement(_star2.default, { style: style });
+	    }),
+	    children
+	  );
+	}
+
+	Stars.propTypes = {
+	  starCoords: _react.PropTypes.array.isRequired,
+	  children: _react.PropTypes.object.isRequired
+	};
+
 /***/ },
 /* 197 */
 /***/ function(module, exports, __webpack_require__) {
@@ -22275,18 +22294,23 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-
-	exports.default = function (_ref) {
-	  var style = _ref.style;
-
-	  return _react2.default.createElement("img", { src: "./img/star.svg", style: style, width: "20", role: "presentation" });
-	};
+	exports.default = Star;
 
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function Star(_ref) {
+	  var style = _ref.style;
+
+	  return _react2.default.createElement("img", { src: "./img/star.svg", style: style, width: "20", role: "presentation" });
+	}
+
+	Star.propTypes = {
+	  style: _react.PropTypes.object.isRequired
+	};
 
 /***/ }
 /******/ ]);

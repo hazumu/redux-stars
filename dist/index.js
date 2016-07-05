@@ -21938,8 +21938,8 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function configureStore(initialState) {
-	  var store = (0, _redux.createStore)(_index2.default, initialState, window.devToolsExtension && window.devToolsExtension());
+	function configureStore() {
+	  var store = (0, _redux.createStore)(_index2.default);
 	  return store;
 	}
 
@@ -22236,7 +22236,6 @@
 	  _createClass(Stars, [{
 	    key: 'render',
 	    value: function render() {
-
 	      return _react2.default.createElement(
 	        'div',
 	        null,

@@ -19,7 +19,7 @@ describe('reducer', () => {
       const [targetX, targetY] = (i === 0)
         ? [originalX, originalY]
         : [starCoords[i - 1][0], starCoords[i - 1][1]];
-      x += (targetX - x) * STAR_CONVERGENCE_RATE; // magic number
+      x += (targetX - x) * STAR_CONVERGENCE_RATE;
       y += (targetY - y) * STAR_CONVERGENCE_RATE;
       return [x, y];
     });

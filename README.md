@@ -1,8 +1,8 @@
 # redux-stars
 
-Beautiful stars chase the trajectory of your mouse!
+Beautiful stars chase the trajectory of your mouse! 
 
-## setting
+## Setting
 
 ```
 npm install -g webpack  
@@ -11,12 +11,12 @@ npm install -g webpack-dev-server
 
 ## Lint
 
-**setting**
+**seting**
 
 ```
 npm install -g --save-dev eslint-config-airbnb eslint-plugin-import eslint-plugin-react eslint-plugin-jsx-a11y
 ```
-**execute**
+**execution**
 
 ```
 npm run lint
@@ -26,4 +26,19 @@ npm run lint
 
 ```
 npm run lint:fix
+```
+
+## Test
+
+
+**setting**
+
+```
+npm install -g mocha
+npm install
+```
+
+**execution**
+```
+npm run test
 ```

@@ -1,6 +1,7 @@
 # redux-stars
 
-Beautiful stars chase the trajectory of your mouse! 
+Beautiful stars chase the trajectory of your mouse!   
+[DEMO](https://hazumu.github.io/redux-star/)
 
 ## Setting
 

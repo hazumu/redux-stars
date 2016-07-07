@@ -11,18 +11,18 @@ npm install -g webpack-dev-server
 
 ## Lint
 
-**seting**
+**Set**
 
 ```
 npm install -g --save-dev eslint-config-airbnb eslint-plugin-import eslint-plugin-react eslint-plugin-jsx-a11y
 ```
-**execution**
+**Run**
 
 ```
 npm run lint
 ```
 
-**auto correct**
+**Fix automatically**
 
 ```
 npm run lint:fix
@@ -31,14 +31,14 @@ npm run lint:fix
 ## Test
 
 
-**setting**
+**Set**
 
 ```
 npm install -g mocha
 npm install
 ```
 
-**execution**
+**Ru**
 ```
 npm run test
 ```

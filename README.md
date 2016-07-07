@@ -39,7 +39,7 @@ npm install -g mocha
 npm install
 ```
 
-**Ru**
+**Run**
 ```
 npm run test
 ```
